@@ -1,0 +1,31 @@
+diff --git a/module/clevo-xsm-wmi.c b/module/clevo-xsm-wmi.c
+index e045d7e..454dcab 100644
+--- a/module/clevo-xsm-wmi.c
++++ b/module/clevo-xsm-wmi.c
+@@ -328,7 +328,7 @@ static int clevo_xsm_input_polling_thread(void *data)
+ 				break;
+ 			}
+ 
+-			clevo_xsm_input_report_key(KEY_RFKILL);
++			clevo_xsm_input_report_key(KEY_WWAN);
+ 			report_cnt++;
+ 
+ 			CLEVO_XSM_DEBUG("Led status: %d",
+@@ -391,7 +391,7 @@ static int __init clevo_xsm_input_init(void)
+ 	clevo_xsm_input_device->close = clevo_xsm_input_close;
+ 
+ 	set_bit(EV_KEY, clevo_xsm_input_device->evbit);
+-	set_bit(KEY_RFKILL, clevo_xsm_input_device->keybit);
++	set_bit(KEY_WWAN, clevo_xsm_input_device->keybit);
+ 
+ 	ec_read(0xDB, &byte);
+ 	ec_write(0xDB, byte & ~0x40);
+@@ -936,7 +936,7 @@ static void clevo_xsm_wmi_notify(u32 value, void *context)
+ 			break;
+ 		}
+ 
+-		clevo_xsm_input_report_key(KEY_RFKILL);
++		clevo_xsm_input_report_key(KEY_WWAN);
+ 		report_cnt++;
+ 
+ 		mutex_unlock(&clevo_xsm_input_report_mutex);

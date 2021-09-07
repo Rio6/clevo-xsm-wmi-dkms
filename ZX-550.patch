@@ -1,0 +1,17 @@
+--- a/module/clevo-xsm-wmi.c
++++ b/module/clevo-xsm-wmi.c
+@@ -1639,6 +1639,14 @@
+         .driver_data = &kb_full_color_ops,
+     },
+ 	{
++		.ident = "ZX-550",
++		.matches = {
++			DMI_MATCH(DMI_PRODUCT_NAME, "ZX Series"),
++		},
++		.callback = clevo_xsm_dmi_matched,
++		.driver_data = &kb_full_color_with_extra_ops,
++	},
++	{
+ 		/* terminating NULL entry */
+ 	},
+ };
