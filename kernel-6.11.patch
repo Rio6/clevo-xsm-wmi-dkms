@@ -1,0 +1,35 @@
+diff --git a/module/clevo-xsm-wmi.c b/module/clevo-xsm-wmi.c
+index e045d7e..a983c59 100644
+--- a/module/clevo-xsm-wmi.c
++++ b/module/clevo-xsm-wmi.c
+@@ -906,17 +906,12 @@ static struct kb_backlight_ops kb_8_color_ops = {
+ };
+ 
+ 
+-static void clevo_xsm_wmi_notify(u32 value, void *context)
++static void clevo_xsm_wmi_notify(union acpi_object *obj, void *context)
+ {
+ 	static unsigned int report_cnt;
+ 
+ 	u32 event;
+ 
+-	if (value != 0xD0) {
+-		CLEVO_XSM_INFO("Unexpected WMI event (%0#6x)\n", value);
+-		return;
+-	}
+-
+ 	clevo_xsm_wmi_evaluate_wmbb_method(GET_EVENT, 0, &event);
+ 
+ 	switch (event) {
+@@ -986,10 +981,9 @@ static int clevo_xsm_wmi_probe(struct platform_device *dev)
+ 	return 0;
+ }
+ 
+-static int clevo_xsm_wmi_remove(struct platform_device *dev)
++static void clevo_xsm_wmi_remove(struct platform_device *dev)
+ {
+ 	wmi_remove_notify_handler(CLEVO_EVENT_GUID);
+-	return 0;
+ }
+ 
+ static int clevo_xsm_wmi_resume(struct platform_device *dev)
